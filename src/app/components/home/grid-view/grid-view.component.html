@@ -1,0 +1,43 @@
+<clr-datagrid class="data-grid">
+  <clr-dg-column>{{ gridColumns.empName }}</clr-dg-column>
+  <clr-dg-column>{{ gridColumns.empId }}</clr-dg-column>
+  <clr-dg-column>{{ gridColumns.designation }}</clr-dg-column>
+  <clr-dg-column>{{ gridColumns.email }}</clr-dg-column>
+  <clr-dg-column>{{ gridColumns.phone }}</clr-dg-column>
+  <clr-dg-column>{{ gridColumns.manager }}</clr-dg-column>
+
+  <clr-dg-row
+    *clrDgItems="let employee of employeesList()"
+    [clrDgItem]="employee"
+    (click)="onRowClick($event, employee.id)"
+  >
+    <clr-dg-action-overflow>
+      <button class="action-item" (click)="onAction(employee.id, 'add')">
+        {{ actionButtons.add }}
+      </button>
+      <button class="action-item" (click)="onAction(employee.id, 'edit')">
+        {{ actionButtons.edit }}
+      </button>
+      <button class="action-item" (click)="onAction(employee.id, 'delete')">
+        {{ actionButtons.delete }}
+      </button>
+      <button class="action-item" (click)="onAction(employee.id, 'change')">
+        {{ actionButtons.change }}
+      </button>
+    </clr-dg-action-overflow>
+    <clr-dg-cell>{{ employee.name }}</clr-dg-cell>
+    <clr-dg-cell>{{ employee.id }}</clr-dg-cell>
+    <clr-dg-cell>{{ employee.designation }}</clr-dg-cell>
+    <clr-dg-cell>{{ employee.email }}</clr-dg-cell>
+    <clr-dg-cell>{{ employee.phoneNumber }}</clr-dg-cell>
+    <clr-dg-cell>{{ employee.managerId }}</clr-dg-cell>
+  </clr-dg-row>
+
+  <clr-dg-footer>
+    <clr-dg-pagination #pagination [clrDgPageSize]="10">
+      <!-- <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50, 100]">Employees per page</clr-dg-page-size> -->
+      {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} /
+      {{ pagination.totalItems }}
+    </clr-dg-pagination>
+  </clr-dg-footer>
+</clr-datagrid>

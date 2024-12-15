@@ -1,0 +1,62 @@
+<div class="chart-container">
+  <p-organizationChart
+    [value]="data()"
+    selectionMode="single"
+    [(selection)]="selectedNode"
+  >
+    <ng-template let-node pTemplate="default">
+      <div class="card">
+        <div class="node-header">
+          <span class="name">{{ node.label }}</span>
+          <span class="settings-icon">
+            <button
+              type="button"
+              class="btn btn-link"
+              [popover]="popTemplate"
+              [outsideClick]="true"
+              placement="bottom right"
+            >
+              <cds-icon
+                class="white-color"
+                shape="cog"
+                size="sm"
+                solid="true"
+              ></cds-icon>
+            </button>
+          </span>
+        </div>
+        <div class="node-content" (click)="onNodeSelect(node)">
+          <div class="profile-icon">
+            <cds-icon shape="user" size="xl" solid="true"></cds-icon>
+          </div>
+          <div class="details">
+            <span>{{ node.data.designation }}</span>
+            <span><b>Email: </b>{{ node.data.email }}</span>
+            <span><b>Phone: </b>{{ node.data.phoneNumber }}</span>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-organizationChart>
+</div>
+
+<ng-template #popTemplate>
+  <clr-vertical-nav>
+    <a clrVerticalNavLink (click)="onAction(selectedNode.data.id, 'add')"
+      ><cds-icon shape="add-text" size="sm" solid="true"></cds-icon
+      >{{ actionButtons.add }}</a
+    >
+    <a clrVerticalNavLink (click)="onAction(selectedNode.data.id, 'edit')"
+      ><cds-icon shape="pencil" size="sm" solid="true"></cds-icon
+      >{{ actionButtons.edit }}</a
+    >
+    <a clrVerticalNavLink (click)="onAction(selectedNode.data.id, 'delete')"
+      ><cds-icon shape="ban" size="sm" solid="true"></cds-icon
+      >{{ actionButtons.delete }}</a
+    >
+    <a clrVerticalNavLink (click)="onAction(selectedNode.data.id, 'change')"
+      ><cds-icon shape="switch" size="sm" solid="true"></cds-icon
+      >{{ actionButtons.change }}</a
+    >
+  </clr-vertical-nav>
+</ng-template>

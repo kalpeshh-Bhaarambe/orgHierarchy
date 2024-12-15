@@ -1,0 +1,34 @@
+<div class="header-container btn-group">
+  <div class="radio btn" (click)="changeView(views.graphView)">
+    <input
+      type="radio"
+      name="btn-group-demo-radios"
+      id="btn-demo-radio-1"
+      [checked]="selectedView() === views.graphView"
+    />
+    <label for="btn-demo-radio-1"
+      ><cds-icon
+        class="header-container_btn-icon"
+        shape="users"
+        solid="true"
+      ></cds-icon>
+      {{ views.graphView }}</label
+    >
+  </div>
+  <div class="radio btn" (click)="changeView(views.gridView)">
+    <input
+      type="radio"
+      name="btn-group-demo-radios"
+      id="btn-demo-radio-2"
+      [checked]="selectedView() === views.gridView"
+    />
+    <label for="btn-demo-radio-2"
+      ><cds-icon
+        class="header-container_btn-icon"
+        shape="table"
+        solid="true"
+      ></cds-icon
+      >{{ views.gridView }}</label
+    >
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<form
+  clrForm
+  [clrLayout]="clrLayout"
+  [clrLabelSize]="clrLabelSize"
+  #modalForm="ngForm"
+>
+  <clr-input-container>
+    <label>{{ formLabels.empName }}:</label>
+    <input clrInput [value]="employeeData().name" name="name" disabled="true" />
+  </clr-input-container>
+
+  @if (modalDetails().type === "change") {
+    <clr-combobox-container>
+      <label>{{ formLabels.managerName }}</label>
+      <clr-combobox
+        [(ngModel)]="employeeData().managerName"
+        name="managerName"
+        required
+      >
+        <clr-options>
+          <clr-option
+            *clrOptionItems="let employee of managerList(); field: 'name'"
+            [clrValue]="employee"
+          >
+            {{ employee.name }}
+          </clr-option>
+        </clr-options>
+      </clr-combobox>
+      <clr-control-error *clrIfError="'required'">
+        {{ messages.managerSelect }}
+      </clr-control-error>
+    </clr-combobox-container>
+  }
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline"
+      (click)="modalForm.resetForm(); onCancel()"
+    >
+      {{ modalDetails().btnCancel }}
+    </button>
+    <button
+      type="submit"
+      [disabled]="modalForm.invalid || modalForm.pending"
+      [ngClass]="{
+        'btn btn-primary': modalDetails().type === 'change',
+        'btn btn-danger': modalDetails().type === 'delete',
+      }"
+      (click)="onSubmit(modalDetails().type)"
+    >
+      {{ modalDetails().btnAction }}
+    </button>
+  </div>
+</form>

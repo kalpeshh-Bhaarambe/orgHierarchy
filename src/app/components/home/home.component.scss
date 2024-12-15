@@ -1,0 +1,40 @@
+.main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  &_header {
+    background-color: #000000;
+    padding: 30px;
+    height: 50px;
+    justify-content: flex-start;
+    font-size: x-large;
+    gap: 10px;
+    align-items: center;
+  }
+  &_nav {
+    background-color: #284a59;
+    display: flex;
+    justify-content: center;
+    height: 80px;
+  }
+  &_content {
+    height: 100%;
+    overflow-y: auto;
+    &_loading {
+      color: #92bed1;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      justify-content: center;
+    }
+    &_error {
+      color: #f16a1b;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      justify-content: center;
+    }
+  }
+}

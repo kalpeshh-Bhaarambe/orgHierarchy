@@ -1,0 +1,128 @@
+@if (employeeData()) {
+  <form
+    clrForm
+    [clrLayout]="clrLayout"
+    [clrLabelSize]="clrLabelSize"
+    #modalForm="ngForm"
+  >
+    @if (modalDetails().type === "add") {
+      <clr-input-container>
+        <label>{{ formLabels.managerName }}:</label>
+        <input
+          clrInput
+          [value]="employeeData().managerName"
+          name="managerName"
+          disabled="true"
+        />
+      </clr-input-container>
+    }
+    <clr-input-container>
+      <label>{{ formLabels.empName }}:</label>
+      <input
+        clrInput
+        name="name"
+        type="text"
+        [(ngModel)]="employeeData().name"
+        minlength="3"
+        pattern="[a-zA-Z\s]{1,50}"
+        required
+      />
+      <clr-control-error *clrIfError="'required'">
+        {{ messages.nameRequired }}
+      </clr-control-error>
+      <clr-control-error *clrIfError="'minlength'">
+        {{ messages.min3Chars }}
+      </clr-control-error>
+      <clr-control-error *clrIfError="'pattern'">
+        {{ messages.validName }}
+      </clr-control-error>
+    </clr-input-container>
+
+    <clr-datalist-container>
+      <label>{{ formLabels.designation }}:</label>
+      <input
+        minlength="2"
+        required
+        clrDatalistInput
+        [(ngModel)]="employeeData().designation"
+        name="designation"
+      />
+
+      <datalist>
+        @for (designation of designations; track $index) {
+          @if ($index < designations.length) {
+            <option value="{{ designation }}"></option>
+          }
+        }
+      </datalist>
+      <clr-control-error *clrIfError="'required'">
+        {{ messages.designationRequired }}
+      </clr-control-error>
+    </clr-datalist-container>
+
+    <clr-input-container>
+      <label>{{ formLabels.emailId }}:</label>
+      <input
+        type="email"
+        clrInput
+        [(ngModel)]="employeeData().email"
+        required
+        name="email"
+        minlength="5"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+      />
+
+      <clr-control-error *clrIfError="'required'">
+        {{ messages.emailRequired }}
+      </clr-control-error>
+      <clr-control-error *clrIfError="'minlength'">
+        {{ messages.min5Chars }}
+      </clr-control-error>
+      <clr-control-error *clrIfError="'pattern'">
+        {{ messages.validEmail }}
+      </clr-control-error>
+    </clr-input-container>
+
+    <clr-input-container>
+      <label>{{ formLabels.phoneNumber }}:</label>
+      <input
+        clrInput
+        [(ngModel)]="employeeData().phoneNumber"
+        type="tel"
+        required
+        name="phoneNumber"
+        pattern="[0-9]{10}"
+      />
+
+      <clr-control-error *clrIfError="'required'">
+        {{ messages.phoneRequired }}
+      </clr-control-error>
+
+      <clr-control-error *clrIfError="'pattern'">
+        {{ messages.validPhone }}
+      </clr-control-error>
+    </clr-input-container>
+
+    <div class="modal-footer">
+      <button
+        clrButton
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="
+          modalForm.invalid || modalForm.pristine || modalForm.pending
+        "
+        (click)="onSubmit(modalDetails().type)"
+      >
+        {{ modalDetails().btnAction }}
+      </button>
+      <button
+        clrButton
+        type="button"
+        class="btn btn-outline"
+        (click)="modalForm.resetForm(); onCancel()"
+      >
+        {{ modalDetails().btnCancel }}
+      </button>
+    </div>
+  </form>
+}

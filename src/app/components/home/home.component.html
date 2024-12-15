@@ -1,0 +1,60 @@
+<div class="main">
+  <header class="header header-6 main_header">
+    <cds-icon shape="snowflake" solid="true"></cds-icon>
+    {{ appName }}
+  </header>
+  <nav class="subnav main_nav">
+    <app-header
+      [selectedView]="selectedView()"
+      (viewChange)="navigateToTab($event)"
+    ></app-header>
+  </nav>
+  <div class="main_content">
+    @if (isLoadingEmployees()) {
+      <!-- <div class="main_content_loading"> -->
+      <span class="main_content_loading">{{ messages.loading }}</span>
+      <!-- </div> -->
+    } @else if (employeeListError()) {
+      <!-- <div class="main_content_error"> -->
+      <span class="main_content_error">{{ messages.loadingError }}</span>
+      <!-- </div> -->
+    } @else {
+      @if (selectedView() === views.graphView) {
+        <app-graph-view
+          [employeesList]="employeesList()"
+          [graphFromEmployeeId]="graphFromEmployeeId"
+          (action)="action($event)"
+        ></app-graph-view>
+      } @else {
+        <app-grid-view
+          [employeesList]="employeesList()"
+          (action)="action($event)"
+        ></app-grid-view>
+      }
+    }
+  </div>
+</div>
+
+<clr-modal [(clrModalOpen)]="modalOpen">
+  <h3 class="modal-title">{{ modalDetails.title }}</h3>
+
+  <div class="modal-body">
+    <p>{{ modalDetails.subText }}</p>
+    @if (modalDetails.type === "add" || modalDetails.type === "edit") {
+      <app-add-edit-employee
+        [modalDetails]="modalDetails"
+        [employeeData]="employeeData"
+        (submitForm)="submitForm($event)"
+        (cancelForm)="cancelForm()"
+      ></app-add-edit-employee>
+    } @else {
+      <app-change-delete-employee
+        [modalDetails]="modalDetails"
+        [employeeData]="employeeData"
+        [managerList]="getAllEmployeesList(employeeData.id)"
+        (submitForm)="submitForm($event)"
+        (cancelForm)="cancelForm()"
+      ></app-change-delete-employee>
+    }
+  </div>
+</clr-modal>
